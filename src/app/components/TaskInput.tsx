@@ -28,14 +28,13 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+    <form onSubmit={handleSubmit} className="space-y-3">
       <div className="space-y-2">
         <Label>Task Name *</Label>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter task name..."
-          className="bg-white"
         />
       </div>
 
@@ -45,7 +44,6 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
           value={details}
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Add details about this task..."
-          className="bg-white"
           rows={3}
         />
       </div>
@@ -54,7 +52,7 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
         <div className="space-y-2">
           <Label>Priority</Label>
           <Select value={priority} onValueChange={(value: any) => setPriority(value)}>
-            <SelectTrigger className="bg-white">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -68,7 +66,7 @@ export function TaskInput({ onAddTask }: TaskInputProps) {
         <div className="space-y-2">
           <Label>Effort</Label>
           <Select value={effort} onValueChange={(value: any) => setEffort(value)}>
-            <SelectTrigger className="bg-white">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

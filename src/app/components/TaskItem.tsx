@@ -90,7 +90,7 @@ export function TaskItem({
           <div className="space-y-2">
             <Label>Priority</Label>
             <Select value={editPriority} onValueChange={(value: any) => setEditPriority(value)}>
-              <SelectTrigger className="bg-white">
+              <SelectTrigger className="bg-white w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -104,7 +104,7 @@ export function TaskItem({
           <div className="space-y-2">
             <Label>Effort</Label>
             <Select value={editEffort} onValueChange={(value: any) => setEditEffort(value)}>
-              <SelectTrigger className="bg-white">
+              <SelectTrigger className="bg-white w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -138,31 +138,26 @@ export function TaskItem({
   }
 
   return (
-    <div className="group flex items-start gap-3 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-      <Checkbox
-        checked={task.completed}
-        onCheckedChange={onToggle}
-        className="mt-0.5"
-        style={
-          task.completed
-            ? {}
-            : {
-                borderColor: categoryColor,
-              }
-        }
-      />
-      
+    <div className="group flex flex-col sm:flex-row items-start gap-3 p-4 bg-gradient-to-r from-blue-50 to-blue-100/50 border-2 border-blue-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all">
+      <div className="flex-shrink-0">
+        <Checkbox
+          checked={task.completed}
+          onCheckedChange={onToggle}
+          className="mt-0.5 border-blue-400"
+        />
+      </div>
+
       <div className="flex-1 min-w-0">
-        <div className={`mb-1 ${task.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+        <div className={`mb-1 ${task.completed ? 'line-through text-gray-400' : 'text-blue-900'}`}>
           {task.name}
         </div>
-        
+
         {task.details && (
-          <p className={`text-sm mb-2 ${task.completed ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm mb-2 ${task.completed ? 'text-gray-400' : 'text-blue-700'}`}>
             {task.details}
           </p>
         )}
-        
+
         <div className="flex items-center gap-2 flex-wrap">
           {categoryName && (
             <div className="flex items-center gap-1.5">
@@ -173,12 +168,12 @@ export function TaskItem({
               <span className="text-sm text-gray-500">{categoryName}</span>
             </div>
           )}
-          
+
           <Badge variant="outline" className={priorityConfig[task.priority].color}>
             <AlertCircle className="w-3 h-3 mr-1" />
             {priorityConfig[task.priority].label}
           </Badge>
-          
+
           <Badge variant="outline" className={effortConfig[task.effort].color}>
             <Zap className="w-3 h-3 mr-1" />
             {effortConfig[task.effort].label}
@@ -186,12 +181,12 @@ export function TaskItem({
         </div>
       </div>
 
-      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex gap-1 mt-3 sm:mt-0 sm:ml-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setIsEditing(true)}
-          className="text-gray-600 hover:text-blue-600"
+          className="text-blue-600 hover:text-blue-700 hover:bg-blue-100"
         >
           <Edit2 className="w-4 h-4" />
         </Button>
@@ -199,7 +194,7 @@ export function TaskItem({
           variant="ghost"
           size="sm"
           onClick={onDelete}
-          className="text-gray-600 hover:text-red-600"
+          className="text-red-500 hover:text-red-700 hover:bg-red-100"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

@@ -80,7 +80,7 @@ export function DeadlineItem({
         <div className="space-y-2">
           <Label>Date</Label>
           <Input
-            type="datetime-local"
+            type="date"
             value={editDate}
             onChange={(e) => setEditDate(e.target.value)}
             className="bg-white"
@@ -109,31 +109,26 @@ export function DeadlineItem({
   }
 
   return (
-    <div className="group flex items-start gap-3 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-      <Checkbox
-        checked={deadline.completed}
-        onCheckedChange={onToggle}
-        className="mt-0.5"
-        style={
-          deadline.completed
-            ? {}
-            : {
-                borderColor: categoryColor,
-              }
-        }
-      />
-      
+    <div className="group flex flex-col sm:flex-row items-start gap-3 p-4 bg-gradient-to-r from-green-50 to-green-100/50 border-2 border-green-200 rounded-xl hover:border-green-300 hover:shadow-md transition-all">
+      <div className="flex-shrink-0">
+        <Checkbox
+          checked={deadline.completed}
+          onCheckedChange={onToggle}
+          className="mt-0.5 border-green-400"
+        />
+      </div>
+
       <div className="flex-1 min-w-0">
-        <div className={`mb-1 ${deadline.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
+        <div className={`mb-1 ${deadline.completed ? 'line-through text-gray-400' : 'text-green-900'}`}>
           {deadline.name}
         </div>
-        
+
         {deadline.details && (
-          <p className={`text-sm mb-2 ${deadline.completed ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm mb-2 ${deadline.completed ? 'text-gray-400' : 'text-green-700'}`}>
             {deadline.details}
           </p>
         )}
-        
+
         <div className="flex items-center gap-3 flex-wrap">
           {categoryName && (
             <div className="flex items-center gap-1.5">
@@ -144,22 +139,22 @@ export function DeadlineItem({
               <span className="text-sm text-gray-500">{categoryName}</span>
             </div>
           )}
-          
+
           <div className={`flex items-center gap-1.5 text-sm ${getDateColor()}`}>
             <Calendar className="w-3.5 h-3.5" />
             <span>
-              {format(parseISO(deadline.date), 'MMM d, yyyy h:mm a')}
+              {format(parseISO(deadline.date), 'MMM d, yyyy')}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex gap-1 mt-3 sm:mt-0 sm:ml-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setIsEditing(true)}
-          className="text-gray-600 hover:text-blue-600"
+          className="text-green-600 hover:text-green-700 hover:bg-green-100"
         >
           <Edit2 className="w-4 h-4" />
         </Button>
@@ -167,7 +162,7 @@ export function DeadlineItem({
           variant="ghost"
           size="sm"
           onClick={onDelete}
-          className="text-gray-600 hover:text-red-600"
+          className="text-red-500 hover:text-red-700 hover:bg-red-100"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

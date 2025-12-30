@@ -2,6 +2,9 @@
 
 :root {
   --font-size: 16px;
+  /* New: global bubbly font family variable */
+  --font-family: "Fredoka", ui-rounded, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -126,6 +129,10 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Apply the bubbly font globally */
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /**

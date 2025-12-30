@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;700&display=swap');
+
+/* Define additional local font stacks if you ever want to fallback to a locally packaged font file:
+   @font-face {
+     font-family: 'MyLocalFredoka';
+     src: url('/fonts/Fredoka-Regular.woff2') format('woff2');
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+   }
+*/
+:root {
+  --font-family: "Fredoka", ui-rounded, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+                 Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}

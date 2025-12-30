@@ -25,14 +25,13 @@ export function DeadlineInput({ onAddDeadline }: DeadlineInputProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+    <form onSubmit={handleSubmit} className="space-y-3">
       <div className="space-y-2">
         <Label>Deadline Name *</Label>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter deadline name..."
-          className="bg-white"
         />
       </div>
 
@@ -42,7 +41,6 @@ export function DeadlineInput({ onAddDeadline }: DeadlineInputProps) {
           value={details}
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Add details about this deadline..."
-          className="bg-white"
           rows={3}
         />
       </div>
@@ -50,11 +48,10 @@ export function DeadlineInput({ onAddDeadline }: DeadlineInputProps) {
       <div className="space-y-2">
         <Label>Date *</Label>
         <Input
-          type="date"  // <-- changed from datetime-local to date
+          type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          placeholder="Select a date" // optional but nice for users
-          className="bg-white"
+          placeholder="Select a date"
         />
       </div>
 
