@@ -7,7 +7,7 @@
   "theme_color": "#6b46c1",
   "icons": [
     {
-      "src": "/checkmatelogo-512.png",
+      "src": "/checkmatelogo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
