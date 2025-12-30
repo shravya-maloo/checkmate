@@ -69,7 +69,7 @@ export function CategoryView({
   const categoryColor = getIconColor(category.icon);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {/* Action Buttons */}
       <div className="flex gap-3">
         <Dialog open={taskDialogOpen} onOpenChange={setTaskDialogOpen}>
@@ -172,16 +172,16 @@ export function CategoryView({
         </div>
 
         {/* Task Filters */}
-        <div className="flex gap-3 p-3 bg-blue-50 rounded-xl border border-blue-200">
-          <div className="flex items-center gap-2 flex-1">
+        <div className="flex flex-col sm:flex-row gap-3 p-3 bg-blue-50 rounded-xl border border-blue-200 w-full overflow-visible">
+          <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-blue-500" />
             <Label className="text-sm text-blue-700">Filter:</Label>
           </div>
-          
-          <div className="flex gap-2 flex-1">
-            <div className="flex-1">
+
+          <div className="flex flex-col sm:flex-row gap-2 flex-1 w-full">
+            <div className="flex-1 min-w-0">
               <Select value={priorityFilter} onValueChange={(value: any) => setPriorityFilter(value)}>
-                <SelectTrigger className="bg-white h-9 border-blue-200">
+                <SelectTrigger className="bg-white h-9 border-blue-200 w-full">
                   <SelectValue placeholder="Priority" />
                 </SelectTrigger>
                 <SelectContent>
@@ -193,9 +193,9 @@ export function CategoryView({
               </Select>
             </div>
 
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <Select value={effortFilter} onValueChange={(value: any) => setEffortFilter(value)}>
-                <SelectTrigger className="bg-white h-9 border-blue-200">
+                <SelectTrigger className="bg-white h-9 border-blue-200 w-full">
                   <SelectValue placeholder="Effort" />
                 </SelectTrigger>
                 <SelectContent>

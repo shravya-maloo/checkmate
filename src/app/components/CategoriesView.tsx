@@ -16,7 +16,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from './ui/collapsible';
-import { getIconComponent } from '../utils/iconMap';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from './ui/dialog';
+import { getIconComponent, iconMap } from '../utils/iconMap';
+import { Label } from './ui/label';
 
 interface CategoriesViewProps {
   categories: Category[];
@@ -70,6 +77,10 @@ export function CategoriesView({
   const [newCategory, setNewCategory] = useState('');
   const [editing, setEditing] = useState<Category | null>(null);
 
+  // Icon picker popup state
+  const [iconPickerOpen, setIconPickerOpen] = useState(false);
+  const [pendingName, setPendingName] = useState<string | null>(null);
+
   const toggleCategory = (id: string) => {
     const next = new Set(openCategories);
     next.has(id) ? next.delete(id) : next.add(id);
@@ -79,6 +90,19 @@ export function CategoriesView({
   const filteredCategories = categories.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const openIconPickerFor = (name: string) => {
+    setPendingName(name);
+    setIconPickerOpen(true);
+  };
+
+  const handleIconSelect = (iconName: string) => {
+    if (!pendingName) return;
+    onAddCategory(pendingName, iconName || 'GraduationCap');
+    setPendingName(null);
+    setNewCategory('');
+    setIconPickerOpen(false);
+  };
 
   return (
     <div className="space-y-4">
@@ -102,23 +126,101 @@ export function CategoriesView({
       </div>
 
       {/* Add Category */}
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <Input
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
           placeholder="New category name"
         />
-        <button
-          className="px-4 rounded-lg bg-purple-600 text-white"
-          onClick={() => {
-            if (!newCategory.trim()) return;
-            onAddCategory(newCategory.trim(), 'Folder');
-            setNewCategory('');
-          }}
-        >
-          Add
-        </button>
+
+        <div className="flex items-center gap-2">
+          <Button
+            className="h-9"
+            onClick={() => {
+              const name = newCategory.trim();
+              if (!name) return;
+              // open icon picker popup; user will choose icon to finalize add
+              openIconPickerFor(name);
+            }}
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add
+          </Button>
+        </div>
       </div>
+
+      {/* Icon picker dialog (opened after user clicks Add) */}
+      <Dialog
+        open={iconPickerOpen}
+        onOpenChange={(open) => {
+          setIconPickerOpen(open);
+          if (!open) {
+            setPendingName(null);
+          }
+        }}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {pendingName ? (
+                <>Pick an icon for “{pendingName}”</>
+              ) : (
+                <>Pick an icon</>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="mt-3">
+            <Label className="mb-2">Tap an icon to select it</Label>
+
+            <div className="grid grid-cols-4 sm:grid-cols-6 gap-3 mt-2">
+              {Object.keys(iconMap).map((iconName) => {
+                const Icon = getIconComponent(iconName);
+                return (
+                  <button
+                    key={iconName}
+                    onClick={() => handleIconSelect(iconName)}
+                    className="flex items-center justify-center p-2 rounded-lg border bg-white hover:shadow-sm focus:shadow-sm focus:outline-none"
+                    aria-label={iconName}
+                    type="button"
+                  >
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-gray-800" />
+                    </div>
+                    <span className="sr-only">{iconName}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  // fallback: if user cancels, allow add with default icon
+                  if (pendingName) {
+                    onAddCategory(pendingName, 'GraduationCap');
+                  }
+                  setPendingName(null);
+                  setIconPickerOpen(false);
+                  setNewCategory('');
+                }}
+              >
+                Use Default / Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  // purely close without adding
+                  setPendingName(null);
+                  setIconPickerOpen(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Category List */}
       {filteredCategories.length === 0 ? (
@@ -179,7 +281,7 @@ export function CategoriesView({
                   </CollapsibleTrigger>
 
                   <CollapsibleContent>
-                    <div className="p-4 border-t bg-purple-50/50">
+                    <div className="p-4 border-t bg-purple-50/50 overflow-visible">
                       <CategoryView
                         category={category}
                         tasks={tasks.filter(
@@ -232,7 +334,30 @@ export function CategoriesView({
               }
             />
 
-            {/* icon picker omitted here for brevity - keep existing implementation if you had one */}
+            <div>
+              <Label className="text-sm">Icon</Label>
+              <div className="grid grid-cols-6 gap-2 mt-2 max-h-36 overflow-auto">
+                {Object.keys(iconMap).map((iconName) => {
+                  const Icon = getIconComponent(iconName);
+                  const active = editing.icon === iconName;
+                  return (
+                    <button
+                      key={iconName}
+                      onClick={() =>
+                        setEditing({ ...editing, icon: iconName })
+                      }
+                      className={`flex items-center justify-center p-1 rounded ${active ? 'ring-2 ring-purple-300' : ''}`}
+                      type="button"
+                      aria-label={iconName}
+                    >
+                      <div className="w-8 h-8 rounded bg-white border flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-purple-600" />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             <div className="flex gap-2">
               <button
