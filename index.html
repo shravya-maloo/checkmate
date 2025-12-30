@@ -3,7 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Vite App</title>
+
+    <title>CheckMate</title>
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Favicons / Icons (fallbacks) -->
+    <!-- Use the generated sizes if available; otherwise point to /checkmatelogo.png -->
+    <link rel="icon" href="/checkmatelogo-192.png" sizes="192x192" />
+    <link rel="icon" href="/checkmatelogo-512.png" sizes="512x512" />
+
+    <!-- iOS home screen icon (most important for iPhone) -->
+    <link rel="apple-touch-icon" href="/checkmatelogo-180.png" sizes="180x180" />
+
+    <!-- iOS web app meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="CheckMate" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#6b46c1" />
   </head>
   <body>
     <div id="root"></div>
