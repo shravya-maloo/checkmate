@@ -57,3 +57,31 @@ checkmate/
 │   ├── checkmatelogo.png
 │   └── manifest.json           # PWA manifest
 └── vite.config.ts
+```
+
+## Data model
+
+CheckMate stores three collections independently in `localStorage`: `categories`, `tasks`, and `deadlines`.
+
+```text
+Category
+├── id
+├── name
+└── icon
+
+Task
+├── id
+├── name
+├── details
+├── priority
+├── effort
+├── completed
+└── categoryId
+
+Deadline
+├── id
+├── name
+├── details
+├── date
+├── completed
+└── categoryId
